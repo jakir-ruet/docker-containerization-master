@@ -105,6 +105,7 @@ docker exec -it doc-kub-first-app /bin/sh
   this instruction finally run the application.
   
 #### Essential command of images
+
 |  SL   | Command                                          | Explanation                                                 |
 | :---: | :----------------------------------------------- | :---------------------------------------------------------- |
 |   1   | `docker image`                                   | Show the command details                                    |
@@ -124,6 +125,7 @@ docker exec -it doc-kub-first-app /bin/sh
 |  15   | `docker tag ImageID ImgNewName`                  | New img will be created if old name is not 'none'           |
 
 #### Essential command of container
+
 |  SL   | Command                                                               | Explanation                                            |
 | :---: | :-------------------------------------------------------------------- | :----------------------------------------------------- |
 |   1   | `docker container`                                                    | Show the command details                               |
@@ -176,6 +178,7 @@ docker exec -it doc-kub-first-app /bin/sh
 - Manage data in [Docker](https://docs.docker.com/storage/)
 
 #### Essential command of volume
+
 |  SL   | Command                                                                  | Explanation                                                  |
 | :---: | :----------------------------------------------------------------------- | :----------------------------------------------------------- |
 |   1   | `docker volume create`                                                   | Create a anonymous volume                                    |
@@ -229,6 +232,7 @@ Container networking refers to the ability for containers to connect to and comm
 - Bridge Network
 - User Define Bridge Network
 - Host Network (under main OS)
+
 |  SL   | Command                                                          | Explanation                                         |
 | :---: | :--------------------------------------------------------------- | :-------------------------------------------------- |
 |   1   | `docker network ls`                                              | Check the network list                              |
