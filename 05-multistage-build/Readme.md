@@ -32,7 +32,7 @@ ENTRYPOINT [ "/app" ]
 
 Build & check memory
 ```bash
-docker build -t go-app-multi .
+docker build -t base-image-app .
 docker images | head -4
 ```
 
@@ -55,7 +55,7 @@ ENTRYPOINT [ "/app" ]
 
 Build & check memory
 ```bash
-docker build -t go-app .
+docker build -t multi-stage-app .
 docker images | head -4
 ```
 
