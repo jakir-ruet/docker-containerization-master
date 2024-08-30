@@ -220,6 +220,14 @@ docker exec -it new-mysql-server mysql -u root -p
 docker inspect new-mysql-server # mysql-server is container name
 ```
 
+#### Create Repository & Push to Docker Hub
+```bash
+docker build -t jakirbd/multi-stage-app:latest .
+docker tag existing-image-id jakirbd/multi-stage-app:latest # If already built
+docker push jakirbd/multi-stage-app:latest
+docker pull jakirbd/multi-stage-app:latest
+```
+
 #### Footnote about volume
 - Storage persistent location outside of container.
 - If container removed then volume will be available on storage.
