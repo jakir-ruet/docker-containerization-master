@@ -30,12 +30,35 @@ volume-mount-app # create a app in docker hub portal
 docker tag con-vol-mount-app jakirbd/volume-mount-app:latest
 docker push jakirbd/volume-mount-app:latest
 ```
-
 - **Bind mounts:**
   A Bind Mount connects a specific folder on your host machine to a folder inside the Docker container. Key Points:
   - Good for development (live code updates).
   - Docker just uses your host's files directly.
   - Not managed by Docker.
+  **Bind Mount**
+  Volume create & mount
+```bash
+mkdir bind-mount-data
+docker build -t con-bind-mount-app .
+docker run -dp 127.0.0.1:3005:3005 --mount type=bind,src="$(pwd)/bind-mount-data",target=/data con-bind-mount-app
+docker logs ContainerID # check logs in container
+```
+Go to your browser
+```bash
+127.0.0.1:3005 # Hit enter it will working
+```
+
+Inspect the volume must after remove the container. It should works
+```bash
+docker volume inspect vol-mnt-test
+```
+
+push on docker hub
+```bash
+volume-mount-app # create a app in docker hub portal
+docker tag con-vol-mount-app jakirbd/volume-mount-app:latest
+docker push jakirbd/volume-mount-app:latest
+```
 - **tmpfs mounts:**
   A tmpfs mount is a special kind of mount that stores files in memory (RAM) instead of on disk. Benefit of tmpfs mount
   - Data is very fast to access
