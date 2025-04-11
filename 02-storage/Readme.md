@@ -7,6 +7,30 @@ By default all files created inside a container are stored on a writable contain
   - Isolated from host filesystem
   - Easy to back up and restore
   - Great for production (e.g., databases)
+    **Volume Mount**
+Volume create & mount
+```bash
+docker volume create vol-mnt-test
+docker build -t con-vol-mount-app .
+docker run -dp 127.0.0.1:3000:3000 --mount type=volume,src=vol-mnt-test,target=//etc/todos con-vol-mount-app
+```
+Go to your browser
+```bash
+127.0.0.1:3000 # Hit enter it will working
+```
+
+Inspect the volume must after remove the container. It should works
+```bash
+docker volume inspect vol-mnt-test
+```
+
+push on docker hub
+```bash
+volume-mount-app # create a app in docker hub portal
+docker tag con-vol-mount-app jakirbd/volume-mount-app:latest
+docker push jakirbd/volume-mount-app:latest
+```
+
 - **Bind mounts:**
   A Bind Mount connects a specific folder on your host machine to a folder inside the Docker container. Key Points:
   - Good for development (live code updates).
