@@ -1,31 +1,37 @@
-## More About Me – [Take a Look!](http://www.mjakaria.me) 
+## More About Me – [Take a Look!](http://www.mjakaria.me)
 
 ### Docker
+
 Docker is a container technology/tool for creating & managing containers.
 
 #### Docker Installation
+
 - How to [Install?](https://docs.docker.com/get-docker/). You may install as per your operating system.
 - Run the following command to uninstall all conflicting packages:
+
   ```bash
   for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
   ```
+
 - Repository setup
-  ```bash
-  # Add Docker's official GPG key:
-  sudo apt-get update
-  sudo apt-get install ca-certificates curl
-  sudo install -m 0755 -d /etc/apt/keyrings
-  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-  sudo chmod a+r /etc/apt/keyrings/docker.asc
-  ```
-  ```bash
-  # Add the repository to Apt sources:
-  echo \
-    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-  sudo apt-get update
-  ```
+
+```bash
+sudo apt-get update # Add Docker's official GPG key:
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+```
+
+```bash
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+
 - Install
 
   ```bash
@@ -33,42 +39,70 @@ Docker is a container technology/tool for creating & managing containers.
   ```
 
 ### Docker Scout
+
 Container images consist of layers and software packages, which are susceptible to vulnerabilities. These vulnerabilities can compromise the security of containers and applications.
 
 Docker Scout is a solution for proactively enhancing your software supply chain security. By analyzing your images, Docker Scout compiles an inventory of components, also known as a Software Bill of Materials (SBOM). The SBOM is matched against a continuously updated vulnerability database to pinpoint security weaknesses.
 
 ### Docker Engine
+
 Docker Engine is an open source containerization technology for building and containerizing your applications. Docker Engine acts as a client-server application with:
+
 - A server with a long-running daemon process dockerd.
 - APIs which specify interfaces that programs can use to talk to and instruct the Docker daemon.
 - A command line interface (CLI) client docker.
 
+### Docker Compose
+
+Docker Compose is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience.
+
+Compose simplifies the control of your entire application stack, making it easy to manage services, networks, and volumes in a single, comprehensible YAML configuration file. Then, with a single command, you create and start all the services from your configuration file.
+
+Compose works in all environments; production, staging, development, testing, as well as CI workflows. It also has commands for managing the whole lifecycle of your application:
+
+- Start, stop, and rebuild services
+- View the status of running services
+- Stream the log output of running services
+- Run a one-off command on a service
+
 #### Container
+
 A container is a lightweight, standalone, standardized, executable package that contains everything needed to run a piece of software, including the code, runtime, system tools, system libraries, and settings.
 
 #### Image
+
 An image is a lightweight, standalone, and executable software package that contains everything needed to run a piece of software. It serves as a template for creating Docker containers. Docker images are built based on a Dockerfile, which is a text document that contains a set of instructions for assembling the image. Two types of images in docker.
+
   1. Pre-Build Image (Node, Apache, Nginx etc.)
   2. Custom Image (Our own build image)
 
 ### Types of Processes
+
 There are fundamentally two types of processes in Unix based OS:
 
-#### Foreground processes
+#### Foreground/Attached processes
+
 These are initialized and controlled through a terminal session (referred to as interactive processes). In other words, there has to be a user connected to the system to start such processes; they haven’t started automatically as part of the system functions/services.
 
-#### Background processes
+#### Background/Detached processes
+
 Are processes not connected to a terminal (referred to as non-interactive/automatic processes); they don’t expect any user input.
 
 ### Attached-Detached
-We can run container in attached mode (in the foreground) or in detached mode (in the background). By default, Docker runs the container in attached mode. In the attached mode, Docker can start the process in the container and attach the console to the process's standard input, standard output, and standard error.
 
-#### How to pull from Docker Hub
+We can run container in attached mode (foreground) or in detached mode (background). By default, Docker runs the container in attached mode. In the attached mode, Docker can start the process in the container and attach the console to the process's standard input, standard output, and standard error.
+
+#### How to build, push & pull from Docker Hub
+
 ```bash
+docker build -t jakirbd/doc-kub-first-app:latest .
+docker tag existing-image-id jakirbd/multi-stage-app:latest # If already built
+docker push jakirbd/doc-kub-first-app:latest
 docker pull jakirbd/doc-kub-first-app:latest
 ```
 
 #### Run the downloaded docker image & access to the application
+
 ```bash
 docker run --name AppName -p 3000:80 -d UserName/AppName:TagName
 docker run --name doc-kub-first-app -p 3000:80 -d jakirbd/doc-kub-first-app:latest
@@ -85,19 +119,20 @@ docker exec -it doc-kub-first-app /bin/sh
 |   3   | `docker logout`         | We can logout                  |
 
 #### Dockerfile
-- ***FROM node:20***
+
+- **FROM node:20**
   this instruction specifies the parent image (with tag) from which we are willing to building.
-- ***WORKDIR /app***
+- **WORKDIR /app**
   this instruction is define current working directory for subsequent instructions in the Dockerfile. when it executed, then all subsequent instruction will be executed.
-- ***COPY package.json .***
+- **COPY package.json .**
   this instruction allow copy the files/folders from host machine into the docker container.
-- ***RUN npm install***
+- **RUN npm install**
   this instruction start the installation command of the application.
-- ***COPY . . [COPY <Source> <Destination>]***
+- **COPY . . [COPY <Source> <Destination>]**
   this instruction allow copy the files/folders from host machine into the docker container.
-- ***EXPOSE 3000***
+- **EXPOSE 3000**
   this instruction will be expose the port for public user of the application.
-- ***CMD ["node", "app.mjs"]***
+- **CMD ["node", "app.mjs"]**
   this instruction finally run the application.
   
 #### Essential command of images
@@ -153,6 +188,7 @@ docker exec -it doc-kub-first-app /bin/sh
 |  26   | `docker logs -f ContainerName`                                        | See the future logs details                            |
 
 #### Data
+
 - Application Data (Code, dependencies, package.json Environment)
   - written by developer
   - added to image & container in build phase.
@@ -167,6 +203,7 @@ docker exec -it doc-kub-first-app /bin/sh
   - read + write possible permanent containers & volumes
 
 ##### Storage
+
 - Volumes (managed by docker)
   - Anonymous Volumes
   - Named Volumes
@@ -191,20 +228,24 @@ docker exec -it doc-kub-first-app /bin/sh
 |  12   | `mkdir /opt/HostDir`                                                     | Create host directory use as volume for app                  |
 |  13   | `docker run -it --name ConName -v /opt/HostDir:/HostDir nginx /bin/bash` | Create a image, container on host directory                  |
 
-Inspect the container & check the volume which is being used here.
+- Inspect the container & check the volume which is being used here.
+
 ```bash
 docker pull mysql
 docker run --name mysql-server -e MYSQL_ROOT_PASSWORD=Mysql@054003 -d mysql:latest
 docker exec -it mysql-server mysql -u root -p
 docker inspect mysql-server # mysql-server is container name
 ```
-create new named volume which we will use.
+
+- create new named volume which we will use.
+
 ```bash
 docker volume create vol-mysql-server
 docker stop mysql-server # for avoid corrupting the data
 ```
 
-cloning data from old to new volume
+- cloning data from old to new volume
+
 ```bash
 docker ps
 docker run --rm --volumes-from ConName[present] -v NewVol:/target VolName[present] sh -c "cp -rp /Destination[present]/. /target" # here -rp > record preserve
@@ -216,26 +257,17 @@ docker exec -it new-mysql-server mysql -u root -p
 docker inspect new-mysql-server # mysql-server is container name
 ```
 
-#### Create Repository & Push to Docker Hub
-```bash
-docker build -t jakirbd/multi-stage-app:latest .
-docker tag existing-image-id jakirbd/multi-stage-app:latest # If already built
-docker push jakirbd/multi-stage-app:latest
-docker pull jakirbd/multi-stage-app:latest
-```
-
-#### Footnote about volume
-- Storage persistent location outside of container.
-- If container removed then volume will be available on storage.
-- It use for the data security purpose.
-
 #### Network in [Docker](https://docs.docker.com/network/)
+
 Container networking refers to the ability for containers to connect to and communicate with each other, or to non-Docker workloads.
 
 ##### Networks types
-- Bridge Network
-- User Define Bridge Network
-- Host Network (under main OS)
+
+1. `bridge (default):` Default network. Used for `container-to-container` communication on the same host.
+2. `host:` Removes network isolation. Container shares the host’s network stack.
+3. `overlay:` Enables communication across multiple Docker hosts (used in Swarm).
+4. `ipvlan:` Gives full control over `IPv4/IPv6` addressing, supports advanced `L2/L3` networking.
+5. `macvlan:` Assigns `MAC addresses to containers`, making them appear as `physical devices on the LAN`. Useful for legacy apps.
 
 |  SL   | Command                                                          | Explanation                                         |
 | :---: | :--------------------------------------------------------------- | :-------------------------------------------------- |
@@ -254,23 +286,22 @@ Container networking refers to the ability for containers to connect to and comm
 |  13   | `docker inspect NetworkName`                                     | Inspect the user define network under NetworkName   |
 |  14   | `docker inspect NetworkName`                                     | Inspect the user define network under NetworkName   |
 
-#### Network Driver Type
-- **_bridge_** The default network driver. If you don't specify a driver, this is the type of network you are creating. Bridge networks are commonly used when your application runs in a container that needs to communicate with other containers on the same host.
-- **_host_** Remove network isolation between the container and the Docker host, and use the host's networking directly.
-- **_overlay_** Overlay networks connect multiple Docker daemons together and enable Swarm services and containers to communicate across nodes. This strategy removes the need to do OS-level routing.
-- **_ipvlan_** IPvlan networks give users total control over both IPv4 and IPv6 addressing. The VLAN driver builds on top of that in giving operators complete control of layer 2 VLAN tagging and even IPvlan L3 routing for users interested in underlay network integration.
-- **_macvlan_** Macvlan networks allow you to assign a MAC address to a container, making it appear as a physical device on your network. The Docker daemon routes traffic to containers by their MAC addresses. Using the macvlan driver is sometimes the best choice when dealing with legacy applications that expect to be directly connected to the physical network, rather than routed through the Docker host's network stack.
+#### Multi Container
 
-### Docker Compose
-Docker Compose is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience.
+The multi-container concept in Docker refers to running multiple containers together as part of a single application or system. This approach is commonly used when building microservices or applications that require multiple services to work together, such as a web server, a database, and a cache.
 
-Compose simplifies the control of your entire application stack, making it easy to manage services, networks, and volumes in a single, comprehensible YAML configuration file. Then, with a single command, you create and start all the services from your configuration file.
+##### Multi-Container Steps
 
-Compose works in all environments; production, staging, development, testing, as well as CI workflows. It also has commands for managing the whole lifecycle of your application:
-- Start, stop, and rebuild services
-- View the status of running services
-- Stream the log output of running services
-- Run a one-off command on a service
+Real-world applications often consist of different components:
+
+- A web server (e.g., Nginx or Apache)
+- An application backend (e.g., Node.js, Django)
+- A database (e.g., MySQL, PostgreSQL)
+- A message broker or cache (e.g., Redis, RabbitMQ)
+
+Each of these runs best in its own container, rather than combining everything into a single image, for modularity, scalability, and separation of concerns.
+
+#### Multistage Build
 
 ## With Regards, `Jakir`
 
@@ -278,7 +309,7 @@ Compose works in all environments; production, staging, development, testing, as
 [![Facebook-Page][facebook-shield-jakir]][facebook-url-jakir]
 [![Youtube][youtube-shield-jakir]][youtube-url-jakir]
 
-### Wishing you a wonderful day! Keep in touch.
+### Wishing you a wonderful day! Keep in touch
 
 <!-- Personal profile -->
 

@@ -1,5 +1,6 @@
-/.vscode
-/.idea
+/.vscode/
+/.idea/
 /.DS_Store
-/01-docker/.DS_Store
-/img/.DS_Store
+## Node modules
+/01-storage/bind-mount-app/node_modules/
+/01-storage/volume-mount-app/node_modules/
