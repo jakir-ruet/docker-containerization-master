@@ -1,8 +1,0 @@
-/.vscode/
-/.idea/
-/.DS_Store
-/01-storage/bind-mount-app/.DS_Store/
-/01-storage/volume-mount-app/.DS_Store/
-## Node modules
-/01-storage/bind-mount-app/node_modules/
-/01-storage/volume-mount-app/node_modules/
