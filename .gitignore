@@ -1,0 +1,4 @@
+/.vscode
+/.idea
+/.DS_Store*
+/01-storage/bind-mount/bind-mount-app/app/node_modules*
