@@ -33,7 +33,7 @@ docker run -d \
   -d mysql:8.0
 ```
 
-### Connect to MySQL inside the container
+### Connect to MySQL inside the container and check database
 
 ```bash
 docker exec -it bind-mount-container mysql -u root -p
@@ -48,7 +48,7 @@ docker stop 454ba675e4f9
 docker rm 454ba675e4f9
 ```
 
-### Again create container with same name check the database
+### Again, create container and check the database, database remaining unchanged
 
 ```bash
 docker run -d \
@@ -59,6 +59,8 @@ docker run -d \
   -v ~/mysql-data:/var/lib/mysql \
   -d mysql:8.0
 ```
+
+### Again, Connect to MySQL inside the container and check database remaining unchanged
 
 ```bash
 docker exec -it bind-mount-container mysql -u root -p
