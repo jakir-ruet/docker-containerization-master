@@ -15,29 +15,24 @@ echo ~/mysql-data # or
 whereis mysql-data
 ```
 
-### Pulling mysql server image
+### Run the container & create database (run it where compose file)
 
 ```bash
-docker pull mysql:8.0
-```
-
-### Run the container & create database
-
-```bash
-docker run -d \
-  --name bind-mount-container \
-  -p 3307:3306 \
-  -e MYSQL_ROOT_PASSWORD=Sql@054003 \
-  -e MYSQL_USER=root \
-  -v ~/mysql-data:/var/lib/mysql \
-  -d mysql:8.0
+docker compose up --build -d
 ```
 
 ### Connect to MySQL inside the container and check database
 
 ```bash
-docker exec -it bind-mount-container mysql -u root -p
+docker exec -it mysql-server-container mysql -u root -p
 show databases;
+create database bind_mount_db;
+use bind_mount_db;
+CREATE TABLE submissions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  input VARCHAR(255) NOT NULL
+);
+select * from submissions;
 ```
 
 ### Stop, remove the container
@@ -51,13 +46,7 @@ docker rm 454ba675e4f9
 ### Again, create container and check the database, database remaining unchanged
 
 ```bash
-docker run -d \
-  --name bind-mount-container \
-  -p 3307:3306 \
-  -e MYSQL_ROOT_PASSWORD=Sql@054003 \
-  -e MYSQL_USER=root \
-  -v ~/mysql-data:/var/lib/mysql \
-  -d mysql:8.0
+docker compose up --build -d
 ```
 
 ### Again, Connect to MySQL inside the container and check database remaining unchanged

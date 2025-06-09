@@ -12,8 +12,8 @@ app.use(express.urlencoded({ extended: true }));
 const db = mysql.createConnection({
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'testdb'
+  password: process.env.DB_PASSWORD || 'Sql@054003',
+  database: process.env.DB_NAME || 'bind_mount_db'
 });
 
 db.connect(err => {

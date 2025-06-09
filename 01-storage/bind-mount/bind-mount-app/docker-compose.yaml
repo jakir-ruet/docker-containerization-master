@@ -1,11 +1,11 @@
 services:
   mysql:
     image: mysql:8.0
-    container_name: mysql-server
+    container_name: mysql-server-container
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Sql@054003
-      MYSQL_DATABASE: testdb
+      MYSQL_DATABASE: bind_mount_db
     ports:
       - "3306:3306"
     volumes:
@@ -14,7 +14,8 @@ services:
   nodeapp:
     build:
       context: ./app
-    container_name: nodejs-app
+    image: nodejs-express  # 👈 Custom image name here
+    container_name: nodejs-app-container
     restart: always
     ports:
       - "3000:3000"
@@ -24,4 +25,4 @@ services:
       DB_HOST: mysql
       DB_USER: root
       DB_PASSWORD: Sql@054003
-      DB_NAME: testdb
+      DB_NAME: bind_mount_db
