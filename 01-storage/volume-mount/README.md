@@ -1,25 +1,57 @@
-# Getting started volume mount application.
+## Welcome to docker bind mount session
 
-### For Docker
+### Volume create & inspection
 
 ```bash
-docker-compose up --build
-http://localhost:5000 # Open your browser
+docker volume create mysql-data-volume-mount
+docker volume inspect mysql-data-volume-mount
 ```
 
-### Build, Push Pull on Docker Registry
+### Create directory for bind
 
 ```bash
-docker build -t jakirbd/volume-mount-app:latest .
-docker tag existing-image-id jakirbd/volume-mount-app:latest # If already built
-docker push jakirbd/volume-mount-app:latest
-docker pull jakirbd/volume-mount-app:latest
+mkdir -p ~/mysql-data-volume-mount
+echo ~/mysql-data-volume-mount # or
+whereis mysql-data-volume-mount
 ```
 
-### Run & Access to application
+### Run the container & create database (run it where compose file)
 
 ```bash
-docker run --name volume-mount-app -p 3000:80 -d jakirbd/volume-mount-app:latest
-docker exec -it volume-mount-app /bin/sh
-docker exec -it volume-mount-app /bin/bash
+docker compose up --build -d
+```
+
+### Connect to MySQL inside the container and check database
+
+```bash
+docker exec -it mysql-server-container mysql -u root -p
+show databases;
+create database volume_mount_db;
+use volume_mount_db;
+CREATE TABLE submissions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  input VARCHAR(255) NOT NULL
+);
+select * from submissions;
+```
+
+### Stop, remove the container
+
+```bash
+docker ps
+docker stop 454ba675e4f9
+docker rm 454ba675e4f9
+```
+
+### Again, create container and check the database, database remaining unchanged
+
+```bash
+docker compose up --build -d
+```
+
+### Again, Connect to MySQL inside the container and check database remaining unchanged
+
+```bash
+docker exec -it volume-mount-container mysql -u root -p
+show databases;
 ```
