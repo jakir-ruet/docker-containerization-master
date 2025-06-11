@@ -25,6 +25,6 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql-data-volume-bind:/var/lib/mysql # here `mysql_data` docker volume in container
+      - ./mysql-volume-mount-volume:/var/lib/mysql # here `mysql_data` docker volume in container
 volumes:
-  mysql-data-volume-bind: # declare the named volume in docker
+  mysql-volume-mount-volume: # declare the named volume in docker

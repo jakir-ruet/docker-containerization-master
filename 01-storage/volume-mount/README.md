@@ -1,57 +1,87 @@
-## Welcome to docker bind mount session
+# Welcome to docker volume mount session
 
-### Volume create & inspection
+## We can implement it two ways
 
-```bash
-docker volume create mysql-data-volume-mount
-docker volume inspect mysql-data-volume-mount
-```
+1. Imperative way and
+2. Declarative way
 
-### Create directory for bind
+### Imperative way
 
-```bash
-mkdir -p ~/mysql-data-volume-mount
-echo ~/mysql-data-volume-mount # or
-whereis mysql-data-volume-mount
-```
-
-### Run the container & create database (run it where compose file)
+#### Create MySQL Container
 
 ```bash
-docker compose up --build -d
+docker run --name mysql-volume-mount-container \
+  -v mysql-volume-mount-volume:/var/lib/mysql \
+  -e MYSQL_ROOT_PASSWORD=Sql@054003 \
+  -d mysql:8.0
 ```
 
-### Connect to MySQL inside the container and check database
+#### Check Volume weather created or not
 
 ```bash
-docker exec -it mysql-server-container mysql -u root -p
-show databases;
-create database volume_mount_db;
-use volume_mount_db;
-CREATE TABLE submissions (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  input VARCHAR(255) NOT NULL
-);
-select * from submissions;
+docker volume ls
+docker volume inspect mysql-volume-mount-volume
+cd /var/lib/docker/volumes/mysql-volume-mount-volume/_data/
+ls -ltr
 ```
 
-### Stop, remove the container
+#### Login to MySQL server, create database and table
+
+```bash
+docker exec -it mysql-volume-mount-container mysql -u root -p
+SHOW DATABASES;
+```
+
+#### Stop & remove container
 
 ```bash
 docker ps
-docker stop 454ba675e4f9
-docker rm 454ba675e4f9
+docker ps -a
+docker stop ffa3c5d31120
+docker rm ffa3c5d31120
+docker exec -it mysql-volume-mount-container mysql -u root -p # Not working due container not exits now
 ```
 
-### Again, create container and check the database, database remaining unchanged
+#### Again, create MySQL Container - where using `mysql-volume-mount-volume`
 
 ```bash
-docker compose up --build -d
+docker run --name mysql-volume-mount-container-new \
+  -v mysql-volume-mount-volume:/var/lib/mysql \
+  -e MYSQL_ROOT_PASSWORD=Sql@054003 \
+  -d mysql:8.0
 ```
 
-### Again, Connect to MySQL inside the container and check database remaining unchanged
+#### Login to MySQL server
 
 ```bash
-docker exec -it volume-mount-container mysql -u root -p
-show databases;
+docker exec -it mysql-volume-mount-container-new mysql -u root -p
+SELECT * FROM Fazly;
+```
+
+#### Check the volume whether it exits or not
+
+```bash
+docker volume inspect mysql-volume-mount-volume
+cd /var/lib/docker/volumes/mysql-volume-mount-volume/_data/
+ls -ltr
+```
+
+### Declarative way
+
+#### Using docker compose
+
+```bash
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-volume-mount-container
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: Sql@054003
+    volumes:
+      - mysql-volume-mount-volume:/var/lib/mysql # map the volume here
+
+volumes:
+  mysql-volume-mount-volume: # define the volume name
 ```

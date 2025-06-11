@@ -1,19 +1,4 @@
-## Welcome to docker bind mount session
-
-### Volume create & inspection
-
-```bash
-docker volume create volume-mount-mysql-volume
-docker volume inspect volume-mount-mysql-volume
-```
-
-### Create directory for bind
-
-```bash
-mkdir -p ~/mysql-data-volume-mount
-echo ~/mysql-data-volume-mount # or
-whereis mysql-data-volume-mount
-```
+## Welcome to docker volume mount session
 
 ### Run the container & create database (run it where compose file)
 
@@ -21,46 +6,55 @@ whereis mysql-data-volume-mount
 docker compose up --build -d
 ```
 
-### Connect to MySQL inside the container and check database
+#### Check Volume weather created or not
 
 ```bash
-docker exec -it mysql-server-container mysql -u root -p
-show databases;
-create database volume_mount_db;
-use volume_mount_db;
+docker volume ls
+docker volume inspect mysql-volume-mount-volume
+cd /var/lib/docker/volumes/mysql-volume-mount-volume/_data/
+ls -ltr
+```
+
+#### Login to MySQL server, create database and table
+
+```bash
+docker exec -it mysql-volume-mount-container mysql -u root -p
+CREATE DATABASE volume_mount_db; # already created from composer
+USE volume_mount_db;
 CREATE TABLE submissions (
   id INT AUTO_INCREMENT PRIMARY KEY,
   input VARCHAR(255) NOT NULL
 );
-select * from submissions;
+SELECT * FROM submissions;
 ```
 
-### Stop, remove the container
+#### Stop & remove container
 
 ```bash
 docker ps
-docker stop 454ba675e4f9
-docker rm 454ba675e4f9
+docker ps -a
+docker stop ffa3c5d31120
+docker rm ffa3c5d31120
+docker exec -it mysql-volume-mount-container mysql -u root -p # Not working due container not exits now
 ```
 
-### Again, create container and check the database, database remaining unchanged
+#### Again, create MySQL Container - where using `mysql-volume-mount-volume`
 
 ```bash
 docker compose up --build -d
 ```
 
-### Check data in mysql container in docker
+#### Login to MySQL server
 
 ```bash
-docker exec -it mysql-server-container sh
-docker exec -it mysql-server-container bash
-cd /var/lib/mysql # Database there
-ls -ltr
+docker exec -it mysql-volume-mount-container-new mysql -u root -p
+SELECT * FROM submissions;
 ```
 
-### Again, Connect to MySQL inside the container and check database remaining unchanged
+#### Check the volume whether it exits or not
 
 ```bash
-docker exec -it volume-mount-container mysql -u root -p
-show databases;
+docker volume inspect mysql-volume-mount-volume
+cd /var/lib/docker/volumes/mysql-volume-mount-volume/_data/
+ls -ltr
 ```
