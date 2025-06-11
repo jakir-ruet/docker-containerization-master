@@ -9,9 +9,7 @@ docker compose up --build -d
 #### Check Volume - No need create any volume, Docker to manage it automatically create name `mysql_bind_mount_data`
 
 ```bash
-docker volume ls
-docker volume inspect mysql_bind_mount_data
-cd /home/mysql_bind_mount_data/_data
+cd /home/mysql_bind_mount_data/
 ls -ltr
 ```
 
@@ -19,8 +17,8 @@ ls -ltr
 
 ```bash
 docker exec -it mysql-bind-mount-container mysql -u root -p
-CREATE DATABASE volume_mount_db; # already created from composer
-USE volume_mount_db;
+CREATE DATABASE bind_mount_db; # already created from composer
+USE bind_mount_db;
 CREATE TABLE submissions (
   id INT AUTO_INCREMENT PRIMARY KEY,
   input VARCHAR(255) NOT NULL
