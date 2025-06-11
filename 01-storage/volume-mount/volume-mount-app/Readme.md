@@ -6,12 +6,12 @@
 docker compose up --build -d
 ```
 
-#### Check Volume weather created or not
+#### Check Volume - No need create any volume, Docker to manage it automatically create name `mysql_data`
 
 ```bash
 docker volume ls
-docker volume inspect mysql-volume-mount-volume
-cd /var/lib/docker/volumes/mysql-volume-mount-volume/_data/
+docker volume inspect mysql_data
+cd /var/lib/docker/volumes/mysql_data/_data
 ls -ltr
 ```
 
@@ -28,6 +28,8 @@ CREATE TABLE submissions (
 SELECT * FROM submissions;
 ```
 
+#### From web browser `http://192.168.1.106:3000`, Submit data
+
 #### Stop & remove container
 
 ```bash
@@ -38,7 +40,7 @@ docker rm ffa3c5d31120
 docker exec -it mysql-volume-mount-container mysql -u root -p # Not working due container not exits now
 ```
 
-#### Again, create MySQL Container - where using `mysql-volume-mount-volume`
+#### Again, create MySQL Container - where using `mysql_data`
 
 ```bash
 docker compose up --build -d
@@ -54,7 +56,8 @@ SELECT * FROM submissions;
 #### Check the volume whether it exits or not
 
 ```bash
-docker volume inspect mysql-volume-mount-volume
-cd /var/lib/docker/volumes/mysql-volume-mount-volume/_data/
+docker volume ls
+docker volume inspect mysql_data
+cd /var/lib/docker/volumes/mysql_data/_data
 ls -ltr
 ```

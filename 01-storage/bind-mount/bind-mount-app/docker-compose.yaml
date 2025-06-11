@@ -9,7 +9,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql-data-bind-mount:/var/lib/mysql # Where `mysql-data` in local/host machine's directory.
+      - /home/mysql_bind_mount_data:/var/lib/mysql # Absolute pate, or
+      #- ./mysql_bind_mount_data:/var/lib/mysql # Where `mysql_bind_mount_data` in local/host in home's directory.
 
   nodeapp:
     build:

@@ -2,7 +2,7 @@ services:
   nodeapp:
     build:
       context: ./app
-    image: nodejs-express  # 👈 Custom image name here
+    image: nodejs-express
     container_name: nodejs-app-container
     restart: always
     ports:
@@ -17,7 +17,7 @@ services:
 
   mysql:
     image: mysql:8.0
-    container_name: mysql-server-container
+    container_name: mysql-volume-mount-container
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Sql@054003
@@ -25,6 +25,9 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql-volume-mount-volume:/var/lib/mysql # here `mysql_data` docker volume in container
+      - mysql_data:/var/lib/mysql # here `mysql_data` docker volume in container
+
 volumes:
-  mysql-volume-mount-volume: # declare the named volume in docker
+  mysql_data:
+    name: mysql_data # declare the named volume in docker
+# if the name `mysql_data` change then it will be bind mount.

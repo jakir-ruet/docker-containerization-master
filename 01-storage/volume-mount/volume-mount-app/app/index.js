@@ -36,12 +36,11 @@ app.get('/', (req, res) => {
 app.post('/submit', (req, res) => {
   const userInput = req.body.input;
 
-  // Save input to DB (optional)
   const query = 'INSERT INTO submissions (input) VALUES (?)';
   db.query(query, [userInput], (err, result) => {
     if (err) {
-      console.error('Error inserting data:', err);
-      return res.send('Error saving data');
+      console.error('❗ SQL Error:', err);  // 👈 Detailed error
+      return res.send(`Error saving data: ${err.message}`);
     }
     res.send(`✅ Submitted: ${userInput}`);
   });
