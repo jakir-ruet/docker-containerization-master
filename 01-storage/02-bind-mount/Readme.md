@@ -1,4 +1,4 @@
-# Welcome to docker volume mount session
+# Welcome to docker Bind Mount session
 
 ## We can implement it two ways
 
