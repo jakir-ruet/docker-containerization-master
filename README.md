@@ -52,11 +52,31 @@ Docker Engine is an open source containerization technology for building and con
 - APIs which specify interfaces that programs can use to talk to and instruct the Docker daemon.
 - A command line interface (CLI) client docker.
 
-### Docker Compose
+### Docker Compose `Run Multi-Container Applications`
 
 Docker Compose is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience.
 
 Compose simplifies the control of your entire application stack, making it easy to manage services, networks, and volumes in a single, comprehensible YAML configuration file. Then, with a single command, you create and start all the services from your configuration file.
+
+```bash
+version: "3.9"
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: appdb
+    volumes:
+      - db-data:/var/lib/mysql
+volumes:
+  db-data:
+```
 
 Compose works in all environments; production, staging, development, testing, as well as CI workflows. It also has commands for managing the whole lifecycle of your application:
 
@@ -64,6 +84,48 @@ Compose works in all environments; production, staging, development, testing, as
 - View the status of running services
 - Stream the log output of running services
 - Run a one-off command on a service
+
+#### Dockerfile `Build the Image`
+
+- **FROM node:20**
+  this instruction specifies the parent image (with tag) from which we are willing to building.
+- **WORKDIR /app**
+  this instruction is define current working directory for subsequent instructions in the Dockerfile. when it executed, then all subsequent instruction will be executed.
+- **COPY package.json .**
+  this instruction allow copy the files/folders from host machine into the docker container.
+- **RUN npm install**
+  this instruction start the installation command of the application.
+- **COPY . . [COPY <Source> <Destination>]**
+  this instruction allow copy the files/folders from host machine into the docker container.
+- **EXPOSE 3000**
+  this instruction will be expose the port for public user of the application.
+- **CMD ["node", "app.mjs"]**
+  this instruction finally run the application.
+
+```bash
+# Base image
+FROM python:3.10-slim
+# Set working directory
+WORKDIR /app
+# Copy code
+COPY . .
+# Install dependencies
+RUN pip install -r requirements.txt
+# Expose port
+EXPOSE 5000
+# Start app
+CMD ["python", "app.py"]
+```
+
+#### Simple Difference
+
+| Feature  | Dockerfile                   | Docker Compose                            |
+| -------- | ---------------------------- | ----------------------------------------- |
+| Purpose  | Build an image               | Run one or multiple containers            |
+| Scope    | Single container image       | Multi-container setup                     |
+| Defines  | Instructions to create image | How containers run (ports, env, volumes)  |
+| Requires | `docker build`, `docker run` | `docker compose up`                       |
+| Good for | Packaging the app            | Local development, testing, orchestration |
 
 #### Container
 
@@ -118,23 +180,6 @@ docker exec -it doc-kub-first-app /bin/sh
 |   2   | `docker login`          | We can access using credential |
 |   3   | `docker logout`         | We can logout                  |
 
-#### Dockerfile
-
-- **FROM node:20**
-  this instruction specifies the parent image (with tag) from which we are willing to building.
-- **WORKDIR /app**
-  this instruction is define current working directory for subsequent instructions in the Dockerfile. when it executed, then all subsequent instruction will be executed.
-- **COPY package.json .**
-  this instruction allow copy the files/folders from host machine into the docker container.
-- **RUN npm install**
-  this instruction start the installation command of the application.
-- **COPY . . [COPY <Source> <Destination>]**
-  this instruction allow copy the files/folders from host machine into the docker container.
-- **EXPOSE 3000**
-  this instruction will be expose the port for public user of the application.
-- **CMD ["node", "app.mjs"]**
-  this instruction finally run the application.
-  
 #### Essential command of images
 
 |  SL   | Command                                          | Explanation                                                 |
