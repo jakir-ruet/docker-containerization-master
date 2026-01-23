@@ -23,7 +23,7 @@ Docker is a containerization technology that packages an application and its dep
 | **Best For**                | Microservices, CI/CD, DevOps, cloud-native apps | Legacy apps, multiple OS needs, strong isolation |
 | **Example**                 | Docker, Podman                                  | VMware, VirtualBox, Hyper-V                      |
 
-[Docker-Container vs Virtual Machine](/img/docker-vm.png)
+![Docker-Container vs Virtual Machine](/img/docker-vm.png)
 
 #### Docker Installation
 
