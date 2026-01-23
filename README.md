@@ -1,8 +1,29 @@
 ## More About Me – [Take a Look!](http://www.mjakaria.me)
 
+### Virtual Machine `VM`
+
+A Virtual Machine (VM) is a software emulation of a physical computer that runs an operating system and applications just like a physical computer. VMs are created using virtualization software, which allows multiple VMs to run on a single physical machine, sharing its resources.
+
 ### Docker
 
-Docker is a container technology/tool for creating & managing containers.
+Docker is a containerization technology that packages an application and its dependencies while sharing the host operating system kernel.
+
+### Docker vs Virtual Machine
+
+| Aspect                      | **Docker (Container)**                          | **Virtual Machine (VM)**                         |
+| --------------------------- | ----------------------------------------------- | ------------------------------------------------ |
+| **OS Requirement**          | Does **not** require a separate guest OS        | Requires a **full guest OS**                     |
+| **Kernel**                  | Shares the host OS kernel                       | Has its **own kernel**                           |
+| **Level of Virtualization** | OS-level virtualization                         | Hardware-level virtualization                    |
+| **Resource Usage**          | Lightweight, minimal CPU & RAM                  | Heavy, higher CPU & RAM usage                    |
+| **Startup Time**            | Seconds                                         | Minutes                                          |
+| **Isolation**               | Process-level isolation                         | Strong, hardware-level isolation                 |
+| **Portability**             | Highly portable across environments             | Less portable                                    |
+| **Size**                    | MBs                                             | GBs                                              |
+| **Best For**                | Microservices, CI/CD, DevOps, cloud-native apps | Legacy apps, multiple OS needs, strong isolation |
+| **Example**                 | Docker, Podman                                  | VMware, VirtualBox, Hyper-V                      |
+
+[Docker-Container vs Virtual Machine](/img/docker-vm.png)
 
 #### Docker Installation
 
