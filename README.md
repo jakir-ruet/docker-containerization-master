@@ -184,6 +184,45 @@ docker push jakirbd/doc-kub-first-app:latest
 docker pull jakirbd/doc-kub-first-app:latest
 ```
 
+#### Why Buildx is Important (For You Specifically)
+
+Since:
+
+- You use Mac M1 (ARM64)
+- You build images for servers (mostly linux/amd64)
+- You deploy to Kubernetes
+
+> Without Buildx, images built on M1 may not run on AMD64 servers.
+
+#### Docker `Buildx`
+
+Docker `buildx` is an extended build tool based on BuildKit. It allows you to:
+
+- Build multi-platform images (amd64, arm64, etc.)
+- Use advanced caching
+- Export images in different formats
+- Build images faster and more efficiently
+- Push directly to registry without local image load
+
+```bash
+docker buildx version
+docker buildx ls
+docker buildx create --name multiarch-builder --use # Use build name
+docker buildx inspect --bootstrap
+```
+
+```bash
+docker buildx rm multiarch-builder
+```
+
+```bash
+docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  -t jakirbd/bidding-app:1.0 \
+  --push \
+  .
+```
+
 #### Run the downloaded docker image & access to the application
 
 ```bash
