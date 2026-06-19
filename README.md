@@ -99,7 +99,7 @@ volumes:
   db-data:
 ```
 
-Compose works in all environments; production, staging, development, testing, as well as CI workflows. It also has commands for managing the whole lifecycle of your application:
+Compose works in all `environments`; `production`, `staging`, `development`, `testing`, as well as `CI workflows`. It also has commands for managing the whole lifecycle of your application:
 
 - Start, stop, and rebuild services
 - View the status of running services
@@ -109,19 +109,19 @@ Compose works in all environments; production, staging, development, testing, as
 #### Dockerfile `Build the Image`
 
 - **FROM node:20**
-  this instruction specifies the parent image (with tag) from which we are willing to building.
+  This instruction specifies the parent image (with tag) from which we are willing to building.
 - **WORKDIR /app**
-  this instruction is define current working directory for subsequent instructions in the Dockerfile. when it executed, then all subsequent instruction will be executed.
+  This instruction is define current working directory for subsequent instructions in the Dockerfile. when it executed, then all subsequent instruction will be executed.
 - **COPY package.json .**
-  this instruction allow copy the files/folders from host machine into the docker container.
+  This instruction allow copy the files/folders from host machine into the docker container.
 - **RUN npm install**
-  this instruction start the installation command of the application.
+  This instruction start the installation command of the application.
 - **COPY . . [COPY <Source> <Destination>]**
-  this instruction allow copy the files/folders from host machine into the docker container.
+  This instruction allow copy the files/folders from host machine into the docker container.
 - **EXPOSE 3000**
-  this instruction will be expose the port for public user of the application.
+  This instruction will be expose the port for public user of the application.
 - **CMD ["node", "app.mjs"]**
-  this instruction finally run the application.
+  This instruction finally run the application.
 
 ```bash
 # Base image
@@ -373,6 +373,14 @@ Container networking refers to the ability for containers to connect to and comm
 3. `overlay:` Enables communication across multiple Docker hosts (used in Swarm).
 4. `ipvlan:` Gives full control over `IPv4/IPv6` addressing, supports advanced `L2/L3` networking.
 5. `macvlan:` Assigns `MAC addresses to containers`, making them appear as `physical devices on the LAN`. Useful for legacy apps.
+
+| Network Type | Scope                 | Communication                           | Typical Use Case                        |
+| ------------ | --------------------- | --------------------------------------- | --------------------------------------- |
+| **bridge**   | Single Docker host    | Container ↔ Container, Container ↔ Host | Default for most applications           |
+| **host**     | Single Docker host    | Container uses host network directly    | High-performance networking             |
+| **overlay**  | Multiple Docker hosts | Cross-host container communication      | Docker Swarm                            |
+| **macvlan**  | Physical LAN          | Container gets its own MAC/IP           | Legacy applications, network appliances |
+| **ipvlan**   | Physical LAN          | Container shares MAC, separate IP       | Large-scale deployments                 |
 
 |  SL   | Command                                                          | Explanation                                         |
 | :---: | :--------------------------------------------------------------- | :-------------------------------------------------- |
