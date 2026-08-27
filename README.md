@@ -30,9 +30,15 @@ Docker is a containerization technology that packages an application and its dep
 - How to [Install?](https://docs.docker.com/get-docker/). You may install as per your operating system.
 - Run the following command to uninstall all conflicting packages:
 
-  ```bash
-  for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
-  ```
+> For pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+
+```bash
+sudo apt install util-linux-extra
+sudo groupadd docker
+sudo usermod -aG docker jakir
+getent group docker
+newgrp docker
+```
 
 - Repository setup
 
